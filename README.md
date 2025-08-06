@@ -1,14 +1,14 @@
 # HtmlTableScraping
 
-A tiny utility that converts HTML `<table>` elements into pandas `DataFrame` objects. It removes superscripts and hidden spans and returns a convenient `Table` subclass for pretty-printing.
+A simple module that turns HTML tables into Pandas `DataFrame` objects.
 
 ## Table of Contents
-- [Features](#features)
+
 - [Installation](#installation)
-  - [Dependencies](#dependencies)
 - [Usage](#usage)
-  - [Example](#example)
-- [Limitations](#limitations)
+- [Development](#development)
+  - [Running tests](#running-tests)
+  - [Linting and type checking](#linting-and-type-checking)
 - [License](#license)
 
 ## Features
@@ -19,7 +19,7 @@ A tiny utility that converts HTML `<table>` elements into pandas `DataFrame` obj
 
 ## Installation
 
-### Dependencies
+## Installation
 
 This project relies on:
 
@@ -28,15 +28,15 @@ This project relies on:
 - ipython
 - ipython-genutils
 
-Install them with `pip`:
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management. Install the dependencies with:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
-Simply include `scraper.py` in your project after installing the dependencies.
-
 ## Usage
+
+The `scraper` module exports one public function: `parse_table(table)`. This function accepts a `BeautifulSoup` `Tag` of type `table` and returns a `pandas.DataFrame` containing the table's contents.
 
 The module exposes one public function, `parse_table(table)`, where `table` is a BeautifulSoup `table` tag. It returns a `Table` (a subclass of `pandas.DataFrame`) containing the parsed data.
 
@@ -53,18 +53,37 @@ html = '''
     <tr><td>1971</td><td>10.79%</td></tr>
 </table>
 '''
+
 soup = BeautifulSoup(html, "lxml")
 table = soup.find("table")
 print(parse_table(table))
 ```
 
-_Output:_
+## Development
 
+This project relies on [pre-commit](https://pre-commit.com/) to run code quality checks. After installing dependencies, run all checks with:
+
+```bash
+uv run pre-commit run --all-files
 ```
-   Year Change
-0  1970  0.10%
-1  1971 10.79%
+
+### Running tests
+
+```bash
+uv run pytest
 ```
+
+### Linting and type checking
+
+```bash
+uv run ruff format
+uv run ruff check
+uv run pyright
+```
+
+## License
+
+`HtmlTableScraping` is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ## Limitations
 
