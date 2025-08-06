@@ -1,0 +1,13 @@
+[project]
+name = "html-table-scraping"
+version = "0.1.0"
+description = "A simple module that turns HTML tables into Pandas DataFrames."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "bs4>=0.0.2",
+    "ipython>=9.4.0",
+    "ipython-genutils>=0.2.0",
+    "lxml>=6.0.0",
+    "pandas>=2.3.1",
+]

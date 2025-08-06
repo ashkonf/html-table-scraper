@@ -18,11 +18,10 @@ This library relies on the following Python libraries:
  - pandas
  - ipython
  - ipython-genutils
-
-These are enumerated in `requirements.txt`. Install them using pip:
+These dependencies are defined in `pyproject.toml` and can be installed with [uv](https://github.com/astral-sh/uv):
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## License
