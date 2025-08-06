@@ -18,18 +18,61 @@ def _get_text(element):
             return ""
     
 class TableCell(object):
+    """Representation of a single HTML table cell.
 
-    # TODO: get links, sups, etc.
-    # TODO: have a to_df method (or just make it a super class of df so that it's that by default)
-    
-    def __init__(self):
-        pass
-        
+    The class stores the visible text of the cell as well as any hyperlinks
+    and superscript elements that were present.  This makes it easier to
+    perform more sophisticated analyses on the cell contents without losing
+    potentially useful metadata (for example, Wikipedia footnotes or links to
+    related pages).
+    """
+
+    def __init__(self, text="", links=None, sups=None):
+        self.text = text
+        self.links = links or []
+        self.sups = sups or []
+
     @classmethod
     def from_soup(cls, soup):
-        sups = soup.find_all("sup")
-        
-        [sup.extract() for sup in sups]
+        """Construct a :class:`TableCell` from a BeautifulSoup element."""
+        if soup is None:
+            return cls()
+
+        soup_copy = _deep_copy(soup)
+
+        # Capture hyperlinks before stripping tags.
+        links = []
+        for a in soup_copy.find_all("a"):
+            links.append({
+                "href": a.get("href"),
+                "text": _get_text(a)
+            })
+
+        # Extract and store superscripts (often footnote markers on pages like
+        # Wikipedia).  Remove them from the copy so that they do not appear in
+        # the plain text.
+        sups = []
+        for sup in soup_copy.find_all("sup"):
+            sups.append(_get_text(sup))
+            sup.extract()
+
+        text = _parse_cell(soup_copy) if soup_copy else ""
+
+        return cls(text=text, links=links, sups=sups)
+
+    def to_df(self):
+        """Convert the cell into a one-row :class:`pandas.DataFrame`.
+
+        This provides an easy bridge for downstream code that expects a
+        dataframe representation of the cell's contents.
+        """
+        return pd.DataFrame([
+            {
+                "text": self.text,
+                "links": self.links,
+                "sups": self.sups,
+            }
+        ])
 
 class Table(pd.DataFrame):
     
