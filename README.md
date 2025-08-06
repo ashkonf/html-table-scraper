@@ -1,7 +1,11 @@
 # HtmlTableScraping
 A simple module that turns HTML tables into Pandas `DataFrames`.
+
+> **Note**
+> Requires Python 3.8 or newer.
 ## Contents
   - [Setup](#Setup)
+  - [Testing](#Testing)
   - [License](#license)
   - [Usage](#Usage)
 
@@ -14,15 +18,25 @@ Simply include the `scraper.py` file in your project and use away! Just make sur
 ### Dependencies
 
 This library relies on the following Python libraries:
- - bs4
+
+ - beautifulsoup4
  - pandas
  - ipython
- - ipython-genutils
+ - requests
+ - lxml
 
-These are enumerated in `requirements.txt`. Install them using pip:
+These are enumerated in `pyproject.toml`. Install them using [uv](https://github.com/astral-sh/uv):
 
 ```bash
-pip install -r requirements.txt
+uv sync
+```
+
+## Testing
+
+Run the test suite with [pytest](https://docs.pytest.org/):
+
+```bash
+uv run pytest
 ```
 
 ## License
