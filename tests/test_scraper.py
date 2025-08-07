@@ -1,4 +1,4 @@
-"""Tests for the :mod:`scraper` module."""
+"""Tests for the :mod:`html_table_scraper` package."""
 
 from __future__ import annotations
 
@@ -6,12 +6,7 @@ import IPython.display
 import pandas as pd
 from bs4 import BeautifulSoup
 
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from scraper import (
+from html_table_scraper import (
     Table,
     TableCell,
     _deep_copy,
