@@ -2,12 +2,6 @@
 
 A simple module that turns HTML tables into Pandas `DataFrame` objects.
 
-## Contents
-  - [Setup](#Setup)
-  - [License](#license)
-  - [Usage](#Usage)
-  - [Tests](#Tests)
-
 ## Table of Contents
 
 - [Installation](#installation)
