@@ -2,15 +2,14 @@
 
 A simple, lightweight Python module for scraping HTML tables and converting them into clean, usable `pandas` `DataFrame` objects.
 
-[![PyPI version](https://badge.fury.io/py/html-table-scraper.svg)](https://badge.fury.io/py/html-table-scraper)
-[![CI](https://github.com/ashkonf/html-table-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/ashkonf/html-table-scraper/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/ashkonf/html-table-scraper/graph/badge.svg?token=YOUR_CODECOV_TOKEN)](https://codecov.io/gh/ashkonf/html-table-scraper)
-[![Tests](https://img.shields.io/badge/tests-passing-success)](https://github.com/ashkonf/html-table-scraper/actions)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![Pytest](https://img.shields.io/badge/built%20with-pytest-orange.svg)](https://www.pytest.org/)
-[![Pyright](https://img.shields.io/badge/pyright-strict-blue.svg)](https://github.com/microsoft/pyright)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ashkonf/html-table-scraper/main.svg)](https://results.pre-commit.ci/latest/github/ashkonf/html-table-scraper/main)
+[![PyPI version](https://img.shields.io/pypi/v/your-package)](link-to-pypi-page)
+[![codecov](https://codecov.io/github/ashkonf/html-table-scraper/graph/badge.svg?token=7Y596J8IYZ)](https://codecov.io/github/ashkonf/html-table-scraper)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Pytest](https://img.shields.io/badge/pytest-✓-brightgreen)](https://docs.pytest.org)
+[![Pyright](https://img.shields.io/badge/pyright-✓-green)](https://github.com/microsoft/pyright)
+[![Ruff](https://img.shields.io/badge/ruff-✓-blue?logo=ruff)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ashkonf/html-table-scraper/ci.yml?branch=main)](https://github.com/ashkonf/html-table-scraper/actions/workflows/ci.yml?query=branch%3Amain)
 
 ## Features
 
