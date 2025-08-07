@@ -1,11 +1,7 @@
-import os
-import sys
-
 import pandas as pd
 from bs4 import BeautifulSoup
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from scraper import parse_table, Table
+from html_table_scraper import parse_table, Table
 
 
 def test_parse_table_basic():
