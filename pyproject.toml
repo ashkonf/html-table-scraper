@@ -21,9 +21,6 @@ dependencies = [
     "beautifulsoup4",
     "pandas",
     "lxml",
-    "pre-commit>=4.2.0",
-    "pytest-cov>=6.2.1",
-    "ipython>=9.4.0",
 ]
 
 [project.optional-dependencies]
@@ -31,10 +28,10 @@ dev = [
     "ipython",
     "ipython-genutils",
     "pytest",
-    "pytest-cov",
+    "pytest-cov>=6.2.1",
     "ruff",
     "pyright",
-    "pre-commit",
+    "pre-commit>=4.2.0",
     "isort",
     "build",
     "twine",
