@@ -1,9 +1,9 @@
 """Additional test cases for html_table_scraper utilities."""
 
-from bs4 import BeautifulSoup
 import pandas as pd
+from bs4 import BeautifulSoup
 
-from html_table_scraper import _parse_element, TableCell, parse_table
+from html_table_scraper import TableCell, _parse_element, parse_table
 
 
 def test_parse_element_hidden_span_case_insensitive() -> None:

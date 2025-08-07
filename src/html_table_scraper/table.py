@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 import IPython.display
-from bs4 import BeautifulSoup, Tag
 import pandas as pd
+from bs4 import BeautifulSoup, Tag
 
 
 def _deep_copy(soup: Tag) -> BeautifulSoup:

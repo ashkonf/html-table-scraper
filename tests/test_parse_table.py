@@ -1,7 +1,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from html_table_scraper import parse_table, Table
+from html_table_scraper import Table, parse_table
 
 
 def test_parse_table_basic():

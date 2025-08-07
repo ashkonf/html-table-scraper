@@ -1,25 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "html-table-scraping"
+name = "html-table-scraper"
 version = "0.1.0"
 description = "A simple module that turns HTML tables into Pandas DataFrames."
 readme = "README.md"
+authors = [
+    {name = "Ashkon Farhangi", email = "ashkon.f@gmail.com"},
+]
+license = {file = "LICENSE"}
 requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
 dependencies = [
     "beautifulsoup4",
     "pandas",
-    "ipython",
-    "ipython-genutils",
     "lxml",
+    "pre-commit>=4.2.0",
+    "pytest-cov>=6.2.1",
+    "ipython>=9.4.0",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
+    "ipython",
+    "ipython-genutils",
     "pytest",
     "pytest-cov",
     "ruff",
     "pyright",
     "pre-commit",
+    "isort",
+    "build",
+    "twine",
 ]
+
+[project.urls]
+"Homepage" = "https://github.com/ashkonf/html-table-scraper"
+"Bug Tracker" = "https://github.com/ashkonf/html-table-scraper/issues"
 
 [tool.ruff]
 line-length = 88
