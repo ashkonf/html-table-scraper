@@ -55,4 +55,3 @@ def test_parse_table_multiple_tbody_sections() -> None:
 
     expected = pd.DataFrame([["1", "2"], ["3", "4"]], columns=["A", "B"])
     pd.testing.assert_frame_equal(result, expected)
-

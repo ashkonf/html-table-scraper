@@ -38,10 +38,13 @@ def test_parse_table_removes_hidden_and_sups_and_normalizes():
 
     result = parse_table(table_tag)
 
-    expected = pd.DataFrame([
-        ["row1col1", "visible line", ""],
-        ["a", "b", "c"],
-    ], columns=["Col1", "Col2", "Col3"])
+    expected = pd.DataFrame(
+        [
+            ["row1col1", "visible line", ""],
+            ["a", "b", "c"],
+        ],
+        columns=["Col1", "Col2", "Col3"],
+    )
     pd.testing.assert_frame_equal(result, expected)
 
 
@@ -103,6 +106,7 @@ def test_parse_table_empty_input():
     result_empty = parse_table(soup.find("table"))
     assert result_empty.empty
 
+
 def test_parse_table_br_tags():
     html = """
     <table>
@@ -162,7 +166,9 @@ def test_parse_table_ignore_first_row_without_header():
     soup = BeautifulSoup(html, "lxml")
     table_tag = soup.find("table")
 
-    result = parse_table(table_tag, first_row_as_col_titles=False, ignore_first_row=True)
+    result = parse_table(
+        table_tag, first_row_as_col_titles=False, ignore_first_row=True
+    )
 
     expected = pd.DataFrame([["c", "d"], ["e", "f"]], columns=["", ""])
     pd.testing.assert_frame_equal(result, expected)
@@ -217,4 +223,3 @@ def test_parse_table_nested_tags():
 
     expected = pd.DataFrame([["Bold and italic"]], columns=["Text"])
     pd.testing.assert_frame_equal(result, expected)
-

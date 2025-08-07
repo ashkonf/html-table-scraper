@@ -1,32 +1,28 @@
 # html-table-scraper
 
-A simple module that turns HTML tables into Pandas `DataFrame` objects.
+A simple, lightweight Python module for scraping HTML tables and converting them into clean, usable `pandas` `DataFrame` objects.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Development](#development)
-  - [Running tests](#running-tests)
-  - [Linting and type checking](#linting-and-type-checking)
-- [License](#license)
+[![PyPI version](https://badge.fury.io/py/html-table-scraping.svg)](https://badge.fury.io/py/html-table-scraping)
 
 ## Features
 
-- Convert HTML tables into pandas DataFrames.
-- Strips superscript footnotes and elements hidden with CSS.
-- Provides a `Table` class with an optional `pretty_print` helper.
+- **Simple API**: Convert an HTML table to a `DataFrame` with a single function call.
+- **Intelligent Parsing**: Automatically handles `<thead>`, `<tbody>`, and `<th>` tags to structure your data correctly.
+- **Cleans Dirty Data**: Strips out unwanted content like superscript footnote markers (e.g., `[1]`, `note 1`) and elements hidden with CSS (`display: none`).
+- **Handles Complex Cells**: Normalizes cell content by converting line breaks to spaces and preserving hyperlinks.
+- **Flexible**: Choose whether to use the first row as column headers or not.
+- **Robust**: Gracefully handles irregular tables, such as those with uneven row lengths or empty cells.
+- **Rich Display**: Includes an optional `pretty_print()` method for enhanced table display in Jupyter notebooks.
 
 ## Installation
 
-This project relies on:
+This project is available on PyPI and can be installed with `pip`:
 
-- beautifulsoup4
-- pandas
-- ipython
-- ipython-genutils
+```bash
+pip install html-table-scraping
+```
 
-This project uses [uv](https://github.com/astral-sh/uv) for dependency management. Install the dependencies with:
+This project uses [uv](https://github.com/astral-sh/uv) for development. To install dependencies for local development, run:
 
 ```bash
 uv sync
@@ -34,70 +30,145 @@ uv sync
 
 ## Usage
 
-The `html_table_scraper` package exports one public function: `parse_table(table)`. This function accepts a `BeautifulSoup` `Tag` of type `table` and returns a `pandas.DataFrame` containing the table's contents.
+The primary function is `html_table_scraper.parse_table()`. It takes a `BeautifulSoup` `Tag` object representing an HTML `<table>` and returns a `Table` object, which is a subclass of `pandas.DataFrame`.
 
-The module exposes one public function, `parse_table(table)`, where `table` is a BeautifulSoup `table` tag. It returns a `Table` (a subclass of `pandas.DataFrame`) containing the parsed data.
-
-### Example
+### Basic Example
 
 ```python
 from bs4 import BeautifulSoup
 from html_table_scraper import parse_table
 
-html = '''
+html = """
 <table>
     <tr><th>Year</th><th>Change</th></tr>
     <tr><td>1970</td><td>0.10%</td></tr>
     <tr><td>1971</td><td>10.79%</td></tr>
 </table>
-'''
+"""
 
 soup = BeautifulSoup(html, "lxml")
 table = soup.find("table")
-print(parse_table(table))
+df = parse_table(table)
+
+print(df)
+```
+
+Output:
+
+```
+   Year   Change
+0  1970    0.10%
+1  1971   10.79%
+```
+
+### Handling Complex Content
+
+The parser automatically cleans and normalizes complex cell content, including stripping hidden elements and superscripts.
+
+```python
+complex_html = """
+<table>
+    <tr><th>Country</th><th>Population</th><th>Notes</th></tr>
+    <tr>
+        <td><a href="/usa">United States</a></td>
+        <td>331 million<sup>1</sup></td>
+        <td>Data from <span style="display:none">hidden text</span>2020 census</td>
+    </tr>
+    <tr>
+        <td><a href="/china">China</a></td>
+        <td>1.4 billion<sup>2</sup></td>
+        <td>Estimated<br/>population</td>
+    </tr>
+</table>
+"""
+
+soup = BeautifulSoup(complex_html, "lxml")
+table = soup.find("table")
+df = parse_table(table)
+
+print(df)
+```
+
+Output:
+
+```
+         Country    Population                       Notes
+0  United States   331 million  Data from 2020 census
+1          China  1.4 billion   Estimated population
+```
+
+### Tables Without Headers
+
+If your table lacks a header row (`<th>`), you can instruct the parser not to treat the first row as column titles.
+
+```python
+no_header_html = """
+<table>
+    <tr><td>Apple</td><td>Red</td><td>Sweet</td></tr>
+    <tr><td>Banana</td><td>Yellow</td><td>Sweet</td></tr>
+</table>
+"""
+
+soup = BeautifulSoup(no_header_html, "lxml")
+table = soup.find("table")
+df = parse_table(table, first_row_as_col_titles=False)
+
+print(df)
+```
+
+Output:
+
+```
+        0       1      2
+0   Apple     Red  Sweet
+1  Banana  Yellow  Sweet
+```
+
+### Rich Display in Notebooks
+
+The returned `Table` object includes a `pretty_print()` method for a clean, titled display in Jupyter environments.
+
+```python
+df = parse_table(soup.find("table"))
+df.title = "My Awesome Table"
+df.pretty_print()
 ```
 
 ## Development
 
-This project relies on [pre-commit](https://pre-commit.com/) to run code quality checks. After installing dependencies, run all checks with:
+This project uses `pre-commit` to maintain code quality. To run all checks:
 
 ```bash
 uv run pre-commit run --all-files
 ```
 
-## Tests
+### Running Tests
 
-This project includes a small pytest suite in `tests/test_parse_table.py` that validates the table parsing logic for
-cases like hidden elements, irregular row lengths, and empty inputs. After installing the dependencies, run the tests with:
-
-```bash
-pip install -r requirements.txt
-pip install pytest lxml
-pytest
-```
-
-### Running tests
+Tests are written with `pytest`. To run the test suite:
 
 ```bash
 uv run pytest
 ```
 
-### Linting and type checking
+### Linting and Type Checking
+
+The project uses `Ruff` for linting and formatting, and `Pyright` for type checking.
 
 ```bash
+# Format code
 uv run ruff format
+
+# Run linter
 uv run ruff check
+
+# Run type checker
 uv run pyright
 ```
 
-## License
-
-`HtmlTableScraping` is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
-
 ## Limitations
 
-`parse_table` currently does not handle `rowspan` or `colspan` attributes. Tables using these features may not be parsed correctly.
+Currently, the parser does not support tables with `rowspan` or `colspan` attributes. These attributes will be ignored, which may result in misaligned data for complex tables.
 
 ## License
 
-HtmlTableScraping is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+`html-table-scraper` is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
