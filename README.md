@@ -2,6 +2,12 @@
 
 A simple module that turns HTML tables into Pandas `DataFrame` objects.
 
+## Contents
+  - [Setup](#Setup)
+  - [License](#license)
+  - [Usage](#Usage)
+  - [Tests](#Tests)
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -65,6 +71,17 @@ This project relies on [pre-commit](https://pre-commit.com/) to run code quality
 
 ```bash
 uv run pre-commit run --all-files
+```
+
+## Tests
+
+This project includes a small pytest suite in `tests/test_parse_table.py` that validates the table parsing logic for
+cases like hidden elements, irregular row lengths, and empty inputs. After installing the dependencies, run the tests with:
+
+```bash
+pip install -r requirements.txt
+pip install pytest lxml
+pytest
 ```
 
 ### Running tests
