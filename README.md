@@ -4,6 +4,7 @@ A simple module that turns HTML tables into Pandas `DataFrames`.
   - [Setup](#Setup)
   - [License](#license)
   - [Usage](#Usage)
+  - [Tests](#Tests)
 
 ## Setup
 
@@ -103,4 +104,15 @@ The `scraper` module exports one public function: `parse_table(table)`. This fun
 54    Year  Change in Index  Total Annual Return Including Dividends  ...  15 Year Annualized Return  20 Year Annualized Return  25 Year Annualized Return
 
 [55 rows x 9 columns]
+```
+
+## Tests
+
+This project includes a small pytest suite in `tests/test_parse_table.py` that validates the table parsing logic for
+cases like hidden elements, irregular row lengths, and empty inputs. After installing the dependencies, run the tests with:
+
+```bash
+pip install -r requirements.txt
+pip install pytest lxml
+pytest
 ```
