@@ -1,3 +1,5 @@
+<div align="center">
+
 # html-table-scraper
 
 A simple, lightweight Python module for scraping HTML tables and converting them into clean, usable `pandas` `DataFrame` objects.
@@ -10,6 +12,8 @@ A simple, lightweight Python module for scraping HTML tables and converting them
 [![Ruff](https://img.shields.io/badge/ruff-✓-blue?logo=ruff)](https://github.com/astral-sh/ruff)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/ashkonf/html-table-scraper/ci.yml?branch=main)](https://github.com/ashkonf/html-table-scraper/actions/workflows/ci.yml?query=branch%3Amain)
+
+</div>
 
 ## Features
 
@@ -24,7 +28,6 @@ A simple, lightweight Python module for scraping HTML tables and converting them
 ## Installation
 
 This project is available on PyPI and can be installed with `pip`:
-
 ```bash
 pip install html-table-scraper
 ```
