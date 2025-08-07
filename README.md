@@ -1,4 +1,4 @@
-# HtmlTableScraping
+# html-table-scraper
 
 A simple module that turns HTML tables into Pandas `DataFrame` objects.
 
