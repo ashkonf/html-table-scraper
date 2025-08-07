@@ -12,7 +12,7 @@ import pandas as pd
 def _deep_copy(soup: Tag) -> BeautifulSoup:
     """Return a deep copy of a BeautifulSoup tag."""
 
-    return BeautifulSoup(str(soup), "lxml")
+    return BeautifulSoup(str(soup), "html.parser")
 
 
 def _get_text(element: Tag | str | None) -> str:
