@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-import IPython.display
 import pandas as pd
 from bs4 import BeautifulSoup, Tag
 
@@ -28,7 +28,8 @@ def _get_text(element: Tag | str | None) -> str:
     return element.get_text()
 
 
-class TableCell(object):
+@dataclass
+class TableCell:
     """Representation of a single HTML table cell.
 
     The class stores the visible text of the cell as well as any hyperlinks
@@ -38,23 +39,9 @@ class TableCell(object):
     related pages).
     """
 
-    def __init__(
-        self,
-        text: str = "",
-        links: Optional[List[Dict[str, str]]] = None,
-        sups: Optional[List[str]] = None,
-    ) -> None:
-        """Create a ``TableCell``.
-
-        Args:
-            text: The visible text contained in the cell.
-            links: Any hyperlinks present in the cell.
-            sups: Superscript markers extracted from the cell.
-        """
-
-        self.text: str = text
-        self.links: List[Dict[str, str]] = links or []
-        self.sups: List[str] = sups or []
+    text: str = ""
+    links: List[Dict[str, str]] = field(default_factory=list)
+    sups: List[str] = field(default_factory=list)
 
     @classmethod
     def from_soup(cls, soup: Optional[Tag]) -> "TableCell":
@@ -113,7 +100,12 @@ class Table(pd.DataFrame):
 
         if self.title is not None:
             print(self.title)
-        IPython.display.display(IPython.display.HTML(self.to_html()))
+        try:
+            from IPython.display import HTML, display
+        except ImportError as exc:  # pragma: no cover - depends on IPython
+            raise ImportError("IPython is required for pretty_print()") from exc
+
+        display(HTML(self.to_html()))
 
 
 def _parse_element(soup: Optional[Tag]) -> Optional[str]:
@@ -147,8 +139,7 @@ def _parse_cell(soup: Optional[Tag]) -> str:
 
 def _parse_row(soup: Tag) -> List[str]:
     """Parse a table row into a list of cell strings."""
-
-    return [_parse_cell(cell) for cell in soup.find_all(["th", "td"])]
+    return [_parse_cell(cell) for cell in soup.find_all(["th", "td"], recursive=False)]
 
 
 def parse_table(
@@ -168,7 +159,13 @@ def parse_table(
     """
 
     if table is not None:
-        rows = table.find_all("tr")
+        rows: List[Tag] = []
+        for child in table.find_all(["tr", "thead", "tbody", "tfoot"], recursive=False):
+            if child.name == "tr":
+                rows.append(child)
+            else:
+                rows.extend(child.find_all("tr", recursive=False))
+
         if ignore_first_row:
             rows = rows[1:]
 

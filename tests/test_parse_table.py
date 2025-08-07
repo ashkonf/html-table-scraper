@@ -223,3 +223,27 @@ def test_parse_table_nested_tags():
 
     expected = pd.DataFrame([["Bold and italic"]], columns=["Text"])
     pd.testing.assert_frame_equal(result, expected)
+
+
+def test_parse_table_ignores_nested_tables():
+    html = """
+    <table>
+        <tr><th>A</th><th>B</th></tr>
+        <tr>
+            <td>1</td>
+            <td>
+                <table>
+                    <tr><td>x1</td><td>x2</td></tr>
+                </table>
+            </td>
+        </tr>
+        <tr><td>3</td><td>4</td></tr>
+    </table>
+    """
+    soup = BeautifulSoup(html, "lxml")
+    table_tag = soup.find("table")
+
+    result = parse_table(table_tag)
+
+    expected = pd.DataFrame([["1", "x1x2"], ["3", "4"]], columns=["A", "B"])
+    pd.testing.assert_frame_equal(result, expected)
