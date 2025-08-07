@@ -36,7 +36,7 @@ uv sync
 
 ## Usage
 
-The `scraper` module exports one public function: `parse_table(table)`. This function accepts a `BeautifulSoup` `Tag` of type `table` and returns a `pandas.DataFrame` containing the table's contents.
+The `html_table_scraper` package exports one public function: `parse_table(table)`. This function accepts a `BeautifulSoup` `Tag` of type `table` and returns a `pandas.DataFrame` containing the table's contents.
 
 The module exposes one public function, `parse_table(table)`, where `table` is a BeautifulSoup `table` tag. It returns a `Table` (a subclass of `pandas.DataFrame`) containing the parsed data.
 
@@ -44,7 +44,7 @@ The module exposes one public function, `parse_table(table)`, where `table` is a
 
 ```python
 from bs4 import BeautifulSoup
-from scraper import parse_table
+from html_table_scraper import parse_table
 
 html = '''
 <table>
