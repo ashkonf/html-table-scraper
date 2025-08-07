@@ -1,4 +1,4 @@
-# HtmlTableScraping
+# html-table-scraper
 
 A simple module that turns HTML tables into Pandas `DataFrame` objects.
 
@@ -16,8 +16,6 @@ A simple module that turns HTML tables into Pandas `DataFrame` objects.
 - Convert HTML tables into pandas DataFrames.
 - Strips superscript footnotes and elements hidden with CSS.
 - Provides a `Table` class with an optional `pretty_print` helper.
-
-## Installation
 
 ## Installation
 
@@ -65,6 +63,17 @@ This project relies on [pre-commit](https://pre-commit.com/) to run code quality
 
 ```bash
 uv run pre-commit run --all-files
+```
+
+## Tests
+
+This project includes a small pytest suite in `tests/test_parse_table.py` that validates the table parsing logic for
+cases like hidden elements, irregular row lengths, and empty inputs. After installing the dependencies, run the tests with:
+
+```bash
+pip install -r requirements.txt
+pip install pytest lxml
+pytest
 ```
 
 ### Running tests
